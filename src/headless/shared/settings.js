@@ -48,6 +48,8 @@ export const DEFAULT_SETTINGS = {
     view_mode: 'overlayed', // Choices are 'overlayed', 'fullscreen', 'mobile'
     websocket_url: undefined,
     whitelisted_plugins: []
+
+    show_user_details_card:true // Muestra la carta del perfil que esta en el heading del chat abierto
 };
 
 

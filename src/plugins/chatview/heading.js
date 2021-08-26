@@ -51,8 +51,10 @@ export default class ChatHeading extends CustomElement {
      * @emits _converse#getHeadingButtons
      */
     getHeadingButtons () {
-        const buttons = [
-            {
+        const buttons = [];
+
+        if (api.settings.get('show_user_details_card')) {
+            buttons.push({
                 'a_class': 'show-user-details-modal',
                 'handler': ev => this.showUserDetailsModal(ev),
                 'i18n_text': __('Details'),
@@ -60,8 +62,9 @@ export default class ChatHeading extends CustomElement {
                 'icon_class': 'fa-id-card',
                 'name': 'details',
                 'standalone': api.settings.get('view_mode') === 'overlayed'
-            }
-        ];
+            });
+        }
+
         if (!api.settings.get('singleton')) {
             buttons.push({
                 'a_class': 'close-chatbox-button',
