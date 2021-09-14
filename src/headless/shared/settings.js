@@ -47,9 +47,12 @@ export const DEFAULT_SETTINGS = {
     strict_plugin_dependencies: false,
     view_mode: 'overlayed', // Choices are 'overlayed', 'fullscreen', 'mobile'
     websocket_url: undefined,
-    whitelisted_plugins: []
+    whitelisted_plugins: [],
 
-    show_user_details_card:true // Muestra la carta del perfil que esta en el heading del chat abierto
+    show_user_details_card:true, // Muestra la carta del perfil que esta en el heading del chat abierto
+    show_perfil_edit_info:true, // Muestra el modal para editar la informacion del perfil
+    show_img_perfil:true, // Muestra el thumnail del perfil
+    show_img_chat_message:true // Muestra el thumnail del perfil
 };
 
 

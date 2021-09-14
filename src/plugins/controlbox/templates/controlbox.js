@@ -18,7 +18,7 @@ export default o => html`
                           <converse-user-profile></converse-user-profile>
                           <converse-headlines-panel class="controlbox-section"></converse-headlines-panel>
                           <div id="chatrooms" class="controlbox-section">
-                              <converse-rooms-list></converse-rooms-list>
+                          
                               <converse-bookmarks></converse-bookmarks>
                           </div>
                           ${ api.settings.get("authentication") === _converse.ANONYMOUS ? '' :
@@ -31,4 +31,5 @@ export default o => html`
             </div>
         </div>
     </div>
-`;
+`
+{/* <converse-rooms-list></converse-rooms-list>; */}

@@ -1,10 +1,9 @@
 import { __ } from 'i18n';
-import { _converse } from '@converse/headless/core';
+import { _converse, api } from '@converse/headless/core';
 import { getHeadingDropdownItem, getHeadingStandaloneButton } from 'plugins/chatview/utils.js';
 import { html } from "lit";
 import { renderAvatar } from 'shared/directives/avatar.js';
 import { until } from 'lit/directives/until.js';
-
 
 async function getStandaloneButtons (promise) {
     const heading_btns = await promise;
@@ -40,13 +39,17 @@ export default (o) => {
     const tpl_standalone_btns = () => getStandaloneButtons(o.heading_buttons_promise)
         .then(btns => btns.reverse().map(b => until(b, '')));
 
+    const show_img_chat_message = api.settings.get('show_img_chat_message');
+
+    console.log(show_img_chat_message);
+
     return html`
         <div class="chatbox-title ${ o.status ? '' :  "chatbox-title--no-desc"}">
             <div class="chatbox-title--row">
                 ${ (!_converse.api.settings.get("singleton")) ?  html`<converse-controlbox-navback jid="${o.jid}"></converse-controlbox-navback>` : '' }
                 ${ (o.type !== _converse.HEADLINES_TYPE) ? html`<a class="show-msg-author-modal" @click=${o.showUserDetailsModal}>${ avatar }</a>` : '' }
                 <div class="chatbox-title__text" title="${o.jid}">
-                    ${ (o.type !== _converse.HEADLINES_TYPE) ? html`<a class="user show-msg-author-modal" @click=${o.showUserDetailsModal}>${ display_name }</a>` : display_name }
+                    ${ (o.type !== _converse.HEADLINES_TYPE && show_img_chat_message) ? html`<a class="user show-msg-author-modal" @click=${o.showUserDetailsModal}>${ display_name }</a>` : display_name }
                 </div>
             </div>
             <div class="chatbox-title__buttons row no-gutters">
