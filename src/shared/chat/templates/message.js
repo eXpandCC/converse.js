@@ -7,8 +7,7 @@ import { renderAvatar } from 'shared/directives/avatar';
 
 export default (el, o) => {
     const i18n_new_messages = __('New messages');
-    const show_img_chat_message = api.settings.get('show_img_chat_message');
-    console.log(show_img_chat_message);
+    const show_avatar = api.settings.get('show_avatar');
     return html`
         ${ o.is_first_unread ? html`<div class="message separator"><hr class="separator"><span class="separator-text">${ i18n_new_messages }</span></div>` : '' }
         <div class="message chat-msg ${ el.getExtraMessageClasses() }"
@@ -20,8 +19,8 @@ export default (el, o) => {
             <!-- Anchor to allow us to scroll the message into view -->
             <a id="${o.msgid}"></a>
 
-            ${  (show_img_chat_message) ?
-                `<a class="show-msg-author-modal" @click=${el.showUserModal}>${ o.should_show_avatar ? renderAvatar(el.getAvatarData()) : '' }</a>` :
+            ${  (show_avatar) ?
+                html`<a class="show-msg-author-modal" @click=${el.showUserModal}>${ o.should_show_avatar ? renderAvatar(el.getAvatarData()) : '' }</a>` :
                 ''
             }
             
@@ -30,7 +29,7 @@ export default (el, o) => {
                 ${ !o.is_me_message ? html`
                     <span class="chat-msg__heading">
                         <span class="chat-msg__author">
-                            ${ (show_img_chat_message) ? 
+                            ${ (show_avatar) ? 
                                 `<a class="show-msg-author-modal" @click=${el.showUserModal}>${o.username}</a>` :
                                 o.username
                             }

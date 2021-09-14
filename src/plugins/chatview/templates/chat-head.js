@@ -39,9 +39,7 @@ export default (o) => {
     const tpl_standalone_btns = () => getStandaloneButtons(o.heading_buttons_promise)
         .then(btns => btns.reverse().map(b => until(b, '')));
 
-    const show_img_chat_message = api.settings.get('show_img_chat_message');
-
-    console.log(show_img_chat_message);
+    const show_avatar = api.settings.get('show_avatar');
 
     return html`
         <div class="chatbox-title ${ o.status ? '' :  "chatbox-title--no-desc"}">
@@ -49,7 +47,7 @@ export default (o) => {
                 ${ (!_converse.api.settings.get("singleton")) ?  html`<converse-controlbox-navback jid="${o.jid}"></converse-controlbox-navback>` : '' }
                 ${ (o.type !== _converse.HEADLINES_TYPE) ? html`<a class="show-msg-author-modal" @click=${o.showUserDetailsModal}>${ avatar }</a>` : '' }
                 <div class="chatbox-title__text" title="${o.jid}">
-                    ${ (o.type !== _converse.HEADLINES_TYPE && show_img_chat_message) ? html`<a class="user show-msg-author-modal" @click=${o.showUserDetailsModal}>${ display_name }</a>` : display_name }
+                    ${ (o.type !== _converse.HEADLINES_TYPE && show_avatar) ? html`<a class="user show-msg-author-modal" @click=${o.showUserDetailsModal}>${ display_name }</a>` : display_name }
                 </div>
             </div>
             <div class="chatbox-title__buttons row no-gutters">

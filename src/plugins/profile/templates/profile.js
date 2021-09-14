@@ -9,11 +9,11 @@ export default (o) => {
     const i18n_details = __('Show details about this chat client');
     const show_settings_button = api.settings.get('show_client_info') || api.settings.get('allow_adhoc_commands');
     const show_perfil_edit_info = api.settings.get('show_perfil_edit_info');
-    const show_img_perfil = api.settings.get('show_img_perfil');
+    const show_avatar = api.settings.get('show_avatar');
     return html`
     <div class="userinfo controlbox-padded">
         <div class="controlbox-section profile d-flex">
-        ${ show_img_perfil ?
+        ${ show_avatar ?
             `<a class="show-profile" href="#" ${ (show_perfil_edit_info) ?  `@click=${o.showProfileModal}` : `` }>
                 <canvas class="avatar align-self-center" height="40" width="40"></canvas>
             </a>`:
