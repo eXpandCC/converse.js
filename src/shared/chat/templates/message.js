@@ -18,21 +18,13 @@ export default (el, o) => {
 
             <!-- Anchor to allow us to scroll the message into view -->
             <a id="${o.msgid}"></a>
-
-            ${  (show_avatar) ?
-                html`<a class="show-msg-author-modal" @click=${el.showUserModal}>${ o.should_show_avatar ? renderAvatar(el.getAvatarData()) : '' }</a>` :
-                ''
-            }
-            
+            ${  (show_avatar) ? html`<a class="show-msg-author-modal" @click=${el.showUserModal}>${ o.should_show_avatar ? renderAvatar(el.getAvatarData()) : '' }</a>` : ''}
             <div class="chat-msg__content chat-msg__content--${o.sender} ${o.is_me_message ? 'chat-msg__content--action' : ''}">
 
                 ${ !o.is_me_message ? html`
                     <span class="chat-msg__heading">
                         <span class="chat-msg__author">
-                            ${ (show_avatar) ? 
-                                `<a class="show-msg-author-modal" @click=${el.showUserModal}>${o.username}</a>` :
-                                o.username
-                            }
+                            ${ (show_avatar) ? `<a class="show-msg-author-modal" @click=${el.showUserModal}>${o.username}</a>` : o.username }
                         </span>
                         ${ o.hats.map(h => html`<span class="badge badge-secondary">${h.title}</span>`) }
                         <time timestamp="${el.model.get('edited') || el.model.get('time')}" class="chat-msg__time">${o.pretty_time}</time>
