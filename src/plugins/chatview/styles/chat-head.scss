@@ -56,10 +56,9 @@
             }
 
             .chatbox-title__buttons {
-                display: flex;
-                flex-direction: row-reverse;
-                flex-wrap: nowrap;
-                padding: 0;
+                display: inline-flex;
+                height: 100%;
+                align-items: center;
             }
 
             .chatbox-title__display_name{
