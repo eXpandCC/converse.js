@@ -42,13 +42,18 @@ export default (el) => {
     const contacts_map = roster.reduce((acc, contact) => populateContactsMap(acc, contact), {});
     const groupnames = Object.keys(contacts_map).filter(shouldShowGroup);
     groupnames.sort(groupsComparator);
+    const show_sync_contacts = api.settings.get('show_sync_contacts');
 
     return html`
         <div class="d-flex controlbox-padded">
             <span class="w-100 controlbox-heading controlbox-heading--contacts">${i18n_heading_contacts}</span>
-            <a class="controlbox-heading__btn sync-contacts" @click=${ev => el.syncContacts(ev)} title="${i18n_title_sync_contacts}">
-                <converse-icon class="fa fa-sync right ${el.syncing_contacts ? 'fa-spin' : ''}" color="var(--subdued-color)" path-prefix="/dist" size="1em"></converse-icon>
-            </a>
+            ${
+                show_sync_contacts ?
+                html`<a class="controlbox-heading__btn sync-contacts" @click=${ev => el.syncContacts(ev)} title="${i18n_title_sync_contacts}">
+                    <converse-icon class="fa fa-sync right ${el.syncing_contacts ? 'fa-spin' : ''}" color="var(--subdued-color)" path-prefix="/dist" size="1em"></converse-icon>
+                </a>` : ''
+            }
+            
             ${ api.settings.get('allow_contact_requests') ? html`
                 <a class="controlbox-heading__btn add-contact"
                     @click=${ev => el.showAddContactModal(ev)}
