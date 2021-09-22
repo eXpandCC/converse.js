@@ -8,6 +8,7 @@ import { renderAvatar } from 'shared/directives/avatar';
 export default (el, o) => {
     const i18n_new_messages = __('New messages');
     const show_avatar = api.settings.get('show_avatar');
+    const show_message_actions = api.settings.get('show_message_actions');
     return html`
         ${ o.is_first_unread ? html`<div class="message separator"><hr class="separator"><span class="separator-text">${ i18n_new_messages }</span></div>` : '' }
         <div class="message chat-msg ${ el.getExtraMessageClasses() }"
@@ -37,14 +38,18 @@ export default (el, o) => {
                             <span class="chat-msg__author">${ o.is_me_message ? '**' : ''}${o.username}</span>&nbsp;` : '' }
                         ${ o.is_retracted ? el.renderRetraction() : el.renderMessageText() }
                     </div>
-                    <converse-message-actions
-                        .model=${el.model}
-                        ?correcting=${o.correcting}
-                        ?editable=${o.editable}
-                        ?hide_url_previews=${el.model.get('hide_url_previews')}
-                        ?is_retracted=${o.is_retracted}
-                        unfurls="${el.model.get('ogp_metadata')?.length}"
-                        message_type="${o.message_type}"></converse-message-actions>
+                    ${ (show_message_actions) ? 
+                        html`
+                            <converse-message-actions
+                            .model=${el.model}
+                            ?correcting=${o.correcting}
+                            ?editable=${o.editable}
+                            ?hide_url_previews=${el.model.get('hide_url_previews')}
+                            ?is_retracted=${o.is_retracted}
+                            unfurls="${el.model.get('ogp_metadata')?.length}"
+                            message_type="${o.message_type}"></converse-message-actions>
+                        ` : ''}
+                    
                 </div>
 
                 ${ !el.model.get('hide_url_previews') ? el.model.get('ogp_metadata')?.map(m =>
