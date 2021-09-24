@@ -8,7 +8,7 @@ export async function createChatBox (jid, attrs, Model) {
     jid = Strophe.getBareJidFromJid(jid.toLowerCase());
     Object.assign(attrs, {'jid': jid, 'id': jid});
     let chatbox;
-    try {
+    try {        
         chatbox = new Model(attrs, {'collection': _converse.chatboxes});
     } catch (e) {
         log.error(e);
@@ -19,6 +19,14 @@ export async function createChatBox (jid, attrs, Model) {
         chatbox.destroy();
         return null;
     }
+
+    if(_converse.chatboxes.length >= 3 ){
+        let JID = _converse.chatboxes.models[1].attributes.jid;
+        console.log(JID);
+        let model = _converse.chatboxes.get(JID);
+        model.close();
+    }
+    
     _converse.chatboxes.add(chatbox);
     return chatbox;
 }
