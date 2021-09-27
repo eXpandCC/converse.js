@@ -54,7 +54,8 @@ export const DEFAULT_SETTINGS = {
     show_avatar:true, // Habilita el thumnail de casa usuario  
     show_chat_group_controlbox:true, // Habilita GroupChat en el ControlBox
     show_sync_contacts:true, // Habilita el icono para sincronizar contactor
-    show_message_actions:true // Habilita la opcion de editar o eliminar un mensaje en el chatroom
+    show_message_actions:true, // Habilita la opcion de editar o eliminar un mensaje en el chatroom
+    show_roster_filters:true // Habilita los filtros de usuarios en el ControlBox
 };
 
 
