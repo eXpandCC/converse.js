@@ -74,6 +74,7 @@
     #controlbox {
         order: -1;
         color: var(--controlbox-text-color);
+        margin: 0 16px 0 8px;
 
         converse-brand-logo {
             width: 100%;
@@ -103,8 +104,6 @@
         .box-flyout {
             background-color: var(--controlbox-pane-background-color);
         }
-
-        margin-right: calc(3 * var(--chat-gutter));
 
         &.logged-out {
             .box-flyout {
