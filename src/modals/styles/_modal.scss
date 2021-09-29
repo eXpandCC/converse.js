@@ -7,10 +7,21 @@
 
     #converse-modals {
         .modal {
+            background-color: rgba(0, 0, 0, 0.32);
+
+            .modal-header{
+                border-bottom:transparent !important;
+                padding: 24px 24px 8px 24px;
+                h5{
+                    font: 500 20px/32px Roboto, "Helvetica Neue", sans-serif;
+                    letter-spacing: normal;
+                    color: rgba(0, 0, 0, 0.87);
+                }
+            }
             .modal-body {
                 overflow-y: auto;
                 max-height: 75vh;
-                margin-bottom: 2em;
+                padding: 0 24px !important;
                 p {
                     padding: 0.25rem 0;
                 }
@@ -21,6 +32,30 @@
                             font-weight: bold;
                         }
                     }
+                }
+                .btn-footer{
+                    display: flex;
+                    position: relative;
+                    flex-shrink: 0;
+                    flex-wrap: wrap;
+                    align-items: flex-end;
+                    justify-content: flex-end;
+                    box-sizing: border-box;
+                    min-height: 52px;
+                    margin: 0;
+
+                    button{
+                        color: black;
+                        font-family: Roboto, "Helvetica Neue", sans-serif;
+                        font-size: 14px;
+                        font-weight: 500;
+                        background-color: transparent;
+                        border: transparent;
+                    }
+
+                    button:hover, button:focus{
+                        background-color:#f8f9fa
+                    };
                 }
 
                 &.fit-content {
@@ -57,7 +92,6 @@
         }
 
         .set-xmpp-status {
-            margin: 1em;
             .custom-control-label {
                 padding-top: 0.25em;
             }
