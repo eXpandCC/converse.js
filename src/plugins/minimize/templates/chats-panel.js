@@ -10,6 +10,7 @@ export default (o) =>{
         <div class="flyout minimized-chats-flyout row no-gutters ${o.collapsed ? 'hidden' : ''}">
             ${o.chats.map(chat =>
                 html`<converse-minimized-chat
+                        class="minimize-chats-toggle"
                         .model=${chat}
                         title=${chat.get('nickname')}
                         type=${chat.get('type')}
