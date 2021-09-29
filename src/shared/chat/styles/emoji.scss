@@ -97,7 +97,7 @@
                     list-style: none;
                     position: relative;
                     &.insert-emoji {
-                        padding: 0 0.2em;
+                        padding: 0;
                         height: auto;
                         width: auto;
                         margin: 0;
@@ -198,10 +198,9 @@
             converse-emoji-dropdown {
                 .dropdown-menu {
                     min-width: 18em;
-                    width: 350px;
-                    z-index: 100;
+                    width: 300px;
                     position: absolute;
-                    left: -96px;
+                    bottom: 82px;
                 }
             }
             .chatbox {
@@ -217,7 +216,7 @@
                     .emoji-picker {
                         .insert-emoji {
                             a {
-                                font-size: 25px;
+                                font-size: 22px;
                                 line-height: calc(var(--font-size) * 2);
                                 padding: 0;
                                 height: calc(var(--font-size) * 2);
@@ -234,7 +233,7 @@
                     }
                     .emoji-picker__header {
                         .emoji-category {
-                            font-size: 21px;
+                            font-size: 18px;
                         }
                     }
                     .emoji-picker__lists {
