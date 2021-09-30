@@ -45,11 +45,12 @@ export default (el) => {
     const show_sync_contacts = api.settings.get('show_sync_contacts');
 
     return html`
-        <div class="d-flex controlbox-padded">
-            <span class="w-100 controlbox-heading controlbox-heading--contacts">${i18n_heading_contacts}</span>
+        <div class="d-flex controlbox-padded">            
             ${
                 show_sync_contacts ?
-                html`<a class="controlbox-heading__btn sync-contacts" @click=${ev => el.syncContacts(ev)} title="${i18n_title_sync_contacts}">
+                html`
+                <span class="w-100 controlbox-heading controlbox-heading--contacts">${i18n_heading_contacts}</span>
+                <a class="controlbox-heading__btn sync-contacts" @click=${ev => el.syncContacts(ev)} title="${i18n_title_sync_contacts}">
                     <converse-icon class="fa fa-sync right ${el.syncing_contacts ? 'fa-spin' : ''}" color="var(--subdued-color)" path-prefix="/dist" size="1em"></converse-icon>
                 </a>` : ''
             }

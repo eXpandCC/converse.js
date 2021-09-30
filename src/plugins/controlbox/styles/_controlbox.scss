@@ -212,7 +212,6 @@
                 padding-bottom: 1em;
 
                 .username {
-                    margin-left: 0.5em;
                     overflow: hidden;
                     text-overflow: ellipsis;
                 }
@@ -349,6 +348,7 @@
                 .change-status {
                     min-width: 25px;
                     text-align: center;
+                    padding-left:20px ;
                 }
             }
 
