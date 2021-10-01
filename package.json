@@ -113,6 +113,7 @@
     "dompurify": "^2.3.0",
     "favico.js-slevomat": "^0.3.11",
     "jed": "1.1.1",
-    "lit": "^2.0.0-rc.2"
+    "lit": "^2.0.0-rc.2",
+    "moment": "^2.29.1"
   }
 }
