@@ -23,6 +23,7 @@ export class RosterFilterView extends CustomElement {
     }
 
     initialize () {
+        const show_roster_filters = api.settings.get('show_roster_filters');
         const model = new _converse.RosterFilter();
         model.id = `_converse.rosterfilter-${_converse.bare_jid}`;
         initStorage(model, model.id);
@@ -97,7 +98,8 @@ export class RosterFilterView extends CustomElement {
     }
 
     shouldBeVisible () {
-        return _converse.roster?.length >= 5 || this.isActive();
+
+        return this.show_roster_filters && _converse.roster?.length >= 5 || this.isActive();
     }
 
     clearFilter (ev) {

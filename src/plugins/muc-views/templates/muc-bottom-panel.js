@@ -18,6 +18,7 @@ const tpl_can_edit = (o) => {
         ${ (o.model.ui.get('scrolled') && o.model.get('num_unread')) ?
                 html`<div class="new-msgs-indicator" @click=${ev => o.viewUnreadMessages(ev)}>▼ ${ unread_msgs } ▼</div>` : '' }
         ${show_toolbar ? html`
+            <converse-muc-message-form jid=${o.model.get('jid')}></converse-muc-message-form>
             <converse-chat-toolbar
                 class="chat-toolbar no-text-select"
                 .model=${o.model}
@@ -29,8 +30,9 @@ const tpl_can_edit = (o) => {
                 ?show_send_button="${show_send_button}"
                 ?show_spoiler_button="${show_spoiler_button}"
                 ?show_toolbar="${show_toolbar}"
-                message_limit="${message_limit}"></converse-chat-toolbar>` : '' }
-        <converse-muc-message-form jid=${o.model.get('jid')}></converse-muc-message-form>`;
+                message_limit="${message_limit}"
+            ></converse-chat-toolbar>` : '' }
+        `;
 }
 
 

@@ -6,9 +6,10 @@ import { renderAvatar } from 'shared/directives/avatar.js';
 export default  (o) => {
    const i18n_chat = __('Click to chat with %1$s (XMPP address: %2$s)', o.display_name, o.jid);
    const i18n_remove = __('Click to remove %1$s as a contact', o.display_name);
+   const show_avatar = api.settings.get('show_avatar');
    return html`
    <a class="list-item-link cbox-list-item open-chat ${ o.num_unread ? 'unread-msgs' : '' }" title="${i18n_chat}" href="#" @click=${o.openChat}>
-      ${ renderAvatar(o.getAvatarData()) }
+      ${ show_avatar ? renderAvatar(o.getAvatarData()) : '' }
       <span class="${o.status_icon}" title="${o.desc_status}"></span>
       ${ o.num_unread ? html`<span class="msgs-indicator">${ o.num_unread }</span>` : '' }
       <span class="contact-name contact-name--${o.show} ${ o.num_unread ? 'unread-msgs' : ''}">${o.display_name}</span>

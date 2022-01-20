@@ -1,11 +1,14 @@
 import 'shared/chat/unfurl.js';
 import { __ } from 'i18n';
+import { api } from '@converse/headless/core';
 import { html } from "lit";
 import { renderAvatar } from 'shared/directives/avatar';
 
 
 export default (el, o) => {
     const i18n_new_messages = __('New messages');
+    const show_avatar = api.settings.get('show_avatar');
+    const show_message_actions = api.settings.get('show_message_actions');
     return html`
         ${ o.is_first_unread ? html`<div class="message separator"><hr class="separator"><span class="separator-text">${ i18n_new_messages }</span></div>` : '' }
         <div class="message chat-msg ${ el.getExtraMessageClasses() }"
@@ -16,13 +19,14 @@ export default (el, o) => {
 
             <!-- Anchor to allow us to scroll the message into view -->
             <a id="${o.msgid}"></a>
-
-            <a class="show-msg-author-modal" @click=${el.showUserModal}>${ o.should_show_avatar ? renderAvatar(el.getAvatarData()) : '' }</a>
+            ${  (show_avatar) ? html`<a class="show-msg-author-modal" @click=${el.showUserModal}>${ o.should_show_avatar ? renderAvatar(el.getAvatarData()) : '' }</a>` : ''}
             <div class="chat-msg__content chat-msg__content--${o.sender} ${o.is_me_message ? 'chat-msg__content--action' : ''}">
 
                 ${ !o.is_me_message ? html`
                     <span class="chat-msg__heading">
-                        <span class="chat-msg__author"><a class="show-msg-author-modal" @click=${el.showUserModal}>${o.username}</a></span>
+                        <span class="chat-msg__author">
+                            ${ (show_avatar) ? `<a class="show-msg-author-modal" @click=${el.showUserModal}>${o.username}</a>` : o.username }
+                        </span>
                         ${ o.hats.map(h => html`<span class="badge badge-secondary">${h.title}</span>`) }
                         <time timestamp="${el.model.get('edited') || el.model.get('time')}" class="chat-msg__time">${o.pretty_time}</time>
                         ${ o.is_encrypted ? html`<span class="fa fa-lock"></span>` : '' }
@@ -34,14 +38,18 @@ export default (el, o) => {
                             <span class="chat-msg__author">${ o.is_me_message ? '**' : ''}${o.username}</span>&nbsp;` : '' }
                         ${ o.is_retracted ? el.renderRetraction() : el.renderMessageText() }
                     </div>
-                    <converse-message-actions
-                        .model=${el.model}
-                        ?correcting=${o.correcting}
-                        ?editable=${o.editable}
-                        ?hide_url_previews=${el.model.get('hide_url_previews')}
-                        ?is_retracted=${o.is_retracted}
-                        unfurls="${el.model.get('ogp_metadata')?.length}"
-                        message_type="${o.message_type}"></converse-message-actions>
+                    ${ (show_message_actions) ? 
+                        html`
+                            <converse-message-actions
+                            .model=${el.model}
+                            ?correcting=${o.correcting}
+                            ?editable=${o.editable}
+                            ?hide_url_previews=${el.model.get('hide_url_previews')}
+                            ?is_retracted=${o.is_retracted}
+                            unfurls="${el.model.get('ogp_metadata')?.length}"
+                            message_type="${o.message_type}"></converse-message-actions>
+                        ` : ''}
+                    
                 </div>
 
                 ${ !el.model.get('hide_url_previews') ? el.model.get('ogp_metadata')?.map(m =>

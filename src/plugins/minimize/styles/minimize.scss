@@ -3,7 +3,7 @@
         &.converse-overlayed {
             converse-minimized-chats {
                 order: 100;
-            }
+            }           
 
             #minimized-chats {
 
@@ -12,8 +12,12 @@
                 border-top-left-radius: var(--chatbox-border-radius);
                 border-top-right-radius: var(--chatbox-border-radius);
                 color: var(--inverse-link-color);
-                margin-right: var(--chat-gutter);
                 padding: 0;
+                height: 100%;
+
+                .minimize-chats-toggle{
+                    margin:0 8px;
+                }
 
                 .badge {
                     bottom: 8px;
@@ -37,7 +41,7 @@
 
                 a.restore-chat {
                     cursor: pointer;
-                    padding: 1px 0 1px 5px;
+                    padding: 1px 10px 0 5px;
                     color: var(--chat-head-text-color);
                     line-height: 15px;
                     display: block;
@@ -54,19 +58,19 @@
                 }
 
                 .minimized-chats-flyout {
-                    flex-direction: column-reverse;
+                    flex-direction: initial;
                     bottom: 45px;
                     width: var(--minimized-chats-width);
+                    height: 100%;
 
                     .chat-head {
+                        background-color: var(--link-color);
                         min-height: 0;
                         padding: 0.3em;
-                        border-radius: var(--chatbox-border-radius);
-                        height: 35px;
-                        margin-bottom: 0.2em;
-                        width: 100%;
+                        width: var(--minimized-chats-width);
                         max-width: 9em;
                         flex-wrap: nowrap;
+                        height: 100%;
                     }
                     &.minimized {
                         height: auto;

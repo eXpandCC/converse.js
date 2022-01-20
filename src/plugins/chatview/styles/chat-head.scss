@@ -56,10 +56,15 @@
             }
 
             .chatbox-title__buttons {
-                display: flex;
-                flex-direction: row-reverse;
-                flex-wrap: nowrap;
-                padding: 0;
+                display: inline-flex;
+                height: 100%;
+                align-items: center;
+            }
+
+            .chatbox-title__display_name{
+                display: inline-flex;
+                height: 100%;
+                align-items: center;
             }
 
             a, a:visited, a:hover, a:not([href]):not([tabindex]) {

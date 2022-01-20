@@ -52,9 +52,9 @@ export default  (o) => {
     return html`
         <div class="roster-group" data-group="${o.name}">
             <a href="#" class="list-toggle group-toggle controlbox-padded" title="${i18n_title}" @click=${ev => toggleGroup(ev, o.name)}>
-                <converse-icon color="var(--chat-head-color)" size="1em" class="fa ${ (collapsed.includes(o.name)) ? 'fa-caret-right' : 'fa-caret-down' }"></converse-icon> ${o.name}
+                ${o.name}<converse-icon color="var(--chat-head-color)" size="1em" class="fa ${ (collapsed.includes(o.name)) ? 'fa-caret-right' : 'fa-caret-down' }"></converse-icon> 
             </a>
-            <ul class="items-list roster-group-contacts ${ (collapsed.includes(o.name)) ? 'collapsed' : '' }" data-group="${o.name}">
+            <ul class="items-list roster-group-contacts ${ (collapsed.includes(o.name)) ? 'collapsed' : '' }" data-group="${o.name}" style="padding:0 20px">
                 ${ o.contacts.map(renderContact) }
             </ul>
         </div>`;

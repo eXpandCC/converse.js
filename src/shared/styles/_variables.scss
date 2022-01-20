@@ -55,10 +55,10 @@ $mobile_portrait_length: 480px !default;
     --roster-height: 194px;
 
     --chat-correcting-color: var(--chat-head-color-lighten-50-percent);
-    --chat-head-color-dark: #1E9652;
-    --chat-head-color-darker: #0E763B;
+    --chat-head-color-dark: #376080; // Cabecera del modal chat
+    --chat-head-color-darker: #204364; // Cabecera del modal chat
     --chat-head-color-lighten-50-percent: #e7f7ee; // lighten($green, 50%)
-    --chat-head-color: var(--green);
+    --chat-head-color: #477393; // Tags y titulos de Chatbox y chatViews
     --chat-head-text-color: white;
     --chat-toolbar-btn-color: var(--green);
     --chat-toolbar-btn-disabled-color: gray;
@@ -104,7 +104,7 @@ $mobile_portrait_length: 480px !default;
     --panel-divider-color: #e7e7e7;
 
     --chat-gutter: 0.5em;
-    --minimized-chats-width: 130px;
+    --minimized-chats-width: 100%;
 
     --mobile-chat-width: 100%;
     --mobile-chat-height: 400px;
@@ -179,7 +179,7 @@ $mobile_portrait_length: 480px !default;
     --overlayed-chat-head-height: 55px;
     --overlayed-chat-height: 450px;
     --overlayed-chat-width: 300px;
-    --overlayed-chatbox-hover-height: 1em;
+    --overlayed-chatbox-hover-height: 1px;
     --overlayed-emoji-picker-height: 200px;
     --overlayed-max-chat-textarea-height: 200px;
     --overlayed-badge-color: #818479; // $gray-color

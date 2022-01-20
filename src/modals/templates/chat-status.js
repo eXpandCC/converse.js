@@ -45,7 +45,9 @@ export default (o) => html`
                             <span class="clear-input fa fa-times ${o.status_message ? '' : 'hidden'}"></span>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary">${o.label_save}</button>
+                    <div class="btn-footer">
+                        <button type="submit" class="btn btn-light">${o.label_save}</button>
+                    </div>                    
                 </form>
             </div>
         </div>

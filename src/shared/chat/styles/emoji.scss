@@ -63,7 +63,7 @@
             .emoji-skintone-picker {
                 display: flex;
                 padding: 0.5em 0;
-                background-color: var(--chat-head-color);
+                background-color: rgba(0,0,0,0.08);
                 width: 100%;
                 font-size: var(--font-size);
                 label {
@@ -71,7 +71,7 @@
                     padding: 0 0.5em;
                     white-space: nowrap;
                     font-size: var(--font-size-small);
-                    color: var(--heading-color);
+                    color: var(--chat-head-color);
                 }
                 ul {
                     display: flex;
@@ -97,7 +97,7 @@
                     list-style: none;
                     position: relative;
                     &.insert-emoji {
-                        padding: 0 0.2em;
+                        padding: 0;
                         height: auto;
                         width: auto;
                         margin: 0;
@@ -133,25 +133,25 @@
                 display: flex;
                 flex-direction: column;
                 padding: 0.1em 0;
-                background-color: var(--chat-head-color);
+                background-color: transparent;
                 .emoji-search {
                     width: auto;
-                    margin: 0.25em;
-                    height: 2em;
+                    margin: 16px;
+                    margin-bottom: 10px;
+                    height: 2.5em;
                     font-size: var(--font-size-small);
                 }
                 ul {
                     display: flex;
                     flex-direction: row;
                     flex-wrap: wrap;
+                    background-color: rgba(0,0,0,0.08);
 
                     .emoji-category {
                         padding: 0.25em 0;
                         font-size: var(--font-size-huge);
                         &.picked {
-                            background-color: white;
-                            border: 1px var(--chat-head-color) solid;
-                            border-bottom: none;
+                            border-bottom: 2px solid var(--chat-head-color);
                         }
                         &.selected a, &:hover a {
                             background-color: var(--highlight-color-darker);
@@ -198,6 +198,9 @@
             converse-emoji-dropdown {
                 .dropdown-menu {
                     min-width: 18em;
+                    width: 300px;
+                    position: absolute;
+                    bottom: 82px;
                 }
             }
             .chatbox {
@@ -213,11 +216,11 @@
                     .emoji-picker {
                         .insert-emoji {
                             a {
-                                font-size: var(--font-size);
-                                line-height: calc(var(--font-size) * 1.5);
+                                font-size: 22px;
+                                line-height: calc(var(--font-size) * 2);
                                 padding: 0;
-                                height: calc(var(--font-size) * 1.5);
-                                width: calc(var(--font-size) * 1.5);
+                                height: calc(var(--font-size) * 2);
+                                width: calc(var(--font-size) * 2.1);
                             }
                             img {
                                 height: var(--font-size);
@@ -230,7 +233,7 @@
                     }
                     .emoji-picker__header {
                         .emoji-category {
-                            font-size: var(--font-size-small);
+                            font-size: 18px;
                         }
                     }
                     .emoji-picker__lists {

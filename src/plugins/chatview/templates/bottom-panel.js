@@ -14,6 +14,8 @@ export default (o) => {
     return html`
         ${ o.model.ui.get('scrolled') && o.model.get('num_unread') ?
                 html`<div class="new-msgs-indicator" @click=${ev => o.viewUnreadMessages(ev)}>▼ ${ unread_msgs } ▼</div>` : '' }
+
+        <converse-message-form jid="${o.model.get('jid')}"></converse-message-form>                
         ${api.settings.get('show_toolbar') ? html`
             <converse-chat-toolbar
                 class="chat-toolbar no-text-select"
@@ -24,7 +26,7 @@ export default (o) => {
                 ?show_send_button="${show_send_button}"
                 ?show_spoiler_button="${show_spoiler_button}"
                 ?show_toolbar="${show_toolbar}"
-                message_limit="${message_limit}"></converse-chat-toolbar>` : '' }
-        <converse-message-form jid="${o.model.get('jid')}"></converse-message-form>
+                message_limit="${message_limit}"></converse-chat-toolbar>` : '' 
+        }        
     `;
 }
