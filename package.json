@@ -32,7 +32,7 @@
     "nodeps": "webpack --config webpack.nodeps.js",
     "cdn": "ASSET_PATH=https://cdn.conversejs.org/dist/ npm run dev && ASSET_PATH=https://cdn.conversejs.org/dist/ npm run build",
     "prod": "webpack --config webpack.prod.js",
-    "build": "npm run dev && npm run prod",
+    "build": "npm run dev && npm run prod && cp dist-package.json dist/package.json",
     "dev": "webpack --config webpack.dev.js",
     "watch": "webpack --watch --config webpack.dev.js",
     "lerna": "lerna bootstrap --hoist --ignore-scripts",
