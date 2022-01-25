@@ -55,7 +55,8 @@ export const DEFAULT_SETTINGS = {
     show_chat_group_controlbox:true, // Habilita GroupChat en el ControlBox
     show_sync_contacts:true, // Habilita el icono para sincronizar contactor
     show_message_actions:true, // Habilita la opcion de editar o eliminar un mensaje en el chatroom
-    show_roster_filters:true // Habilita los filtros de usuarios en el ControlBox
+    show_roster_filters:true, // Habilita los filtros de usuarios en el ControlBox
+    attempt_reconnect:3 // Intentos de reconeccion cuando expira el token de la session o se borra la session
 };
 
 

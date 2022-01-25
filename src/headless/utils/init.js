@@ -10,7 +10,7 @@ import { Model } from '@converse/skeletor/src/model.js';
 import { Strophe } from 'strophe.js/src/strophe';
 import { createStore, initStorage } from '@converse/headless/utils/storage.js';
 import { getLoginCredentialsFromBrowser } from '@converse/headless/utils/core.js';
-
+import { api } from "@converse/headless/core";
 
 export function initPlugins (_converse) {
     // If initialize gets called a second time (e.g. during tests), then we
@@ -213,7 +213,9 @@ export async function cleanup (_converse) {
 async function getLoginCredentials () {
     let credentials;
     let wait = 0;
-    while (!credentials) {
+    let attempt_reconnect = api.settings.get('attempt_reconnect');
+    while (!credentials && attempt_reconnect !== 0 ) {
+        attempt_reconnect--;
         try {
             credentials = await fetchLoginCredentials(wait); // eslint-disable-line no-await-in-loop
         } catch (e) {
@@ -224,6 +226,11 @@ async function getLoginCredentials () {
         // fetch the credentials.
         wait = 2000;
     }
+
+    if(credentials === undefined){
+        _converse.api.trigger('login-credentials-failed');
+    }
+
     return credentials;
 }
 

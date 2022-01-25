@@ -1,27 +1,26 @@
 import RosterContact from './contact.js';
-import log from "@converse/headless/log";
+import log from '@converse/headless/log';
 import sum from 'lodash-es/sum';
-import { Collection } from "@converse/skeletor/src/collection";
-import { Model } from "@converse/skeletor/src/model";
+import { Collection } from '@converse/skeletor/src/collection';
+import { Model } from '@converse/skeletor/src/model';
 import { __ } from 'i18n';
-import { _converse, api, converse } from "@converse/headless/core";
+import { _converse, api, converse } from '@converse/headless/core';
 import { initStorage } from '@converse/headless/utils/storage.js';
 import { rejectPresenceSubscription } from './utils.js';
 
 const { Strophe, $iq, sizzle, u } = converse.env;
 
-
 const RosterContacts = Collection.extend({
     model: RosterContact,
 
-    initialize () {
+    initialize() {
         const id = `roster.state-${_converse.bare_jid}-${this.get('jid')}`;
         this.state = new Model({ id, 'collapsed_groups': [] });
         initStorage(this.state, id);
         this.state.fetch();
     },
 
-    onConnected () {
+    onConnected() {
         // Called as soon as the connection has been established
         // (either after initial login, or after reconnection).
         // Use the opportunity to register stanza handlers.
@@ -29,30 +28,36 @@ const RosterContacts = Collection.extend({
         this.registerRosterXHandler();
     },
 
-    registerRosterHandler () {
+    registerRosterHandler() {
         // Register a handler for roster IQ "set" stanzas, which update
         // roster contacts.
-        _converse.connection.addHandler(iq => {
-            _converse.roster.onRosterPush(iq);
-            return true;
-        }, Strophe.NS.ROSTER, 'iq', "set");
+        _converse.connection.addHandler(
+            iq => {
+                _converse.roster.onRosterPush(iq);
+                return true;
+            },
+            Strophe.NS.ROSTER,
+            'iq',
+            'set'
+        );
     },
 
-    registerRosterXHandler () {
+    registerRosterXHandler() {
         // Register a handler for RosterX message stanzas, which are
         // used to suggest roster contacts to a user.
         let t = 0;
         _converse.connection.addHandler(
             function (msg) {
-                window.setTimeout(
-                    function () {
-                        _converse.connection.flush();
-                        _converse.roster.subscribeToSuggestedItems.bind(_converse.roster)(msg);
-                    }, t);
-                t += msg.querySelectorAll('item').length*250;
+                window.setTimeout(function () {
+                    _converse.connection.flush();
+                    _converse.roster.subscribeToSuggestedItems.bind(_converse.roster)(msg);
+                }, t);
+                t += msg.querySelectorAll('item').length * 250;
                 return true;
             },
-            Strophe.NS.ROSTERX, 'message', null
+            Strophe.NS.ROSTERX,
+            'message',
+            null
         );
     },
 
@@ -62,19 +67,19 @@ const RosterContacts = Collection.extend({
      * @private
      * @returns {promise} Promise which resolves once the contacts have been fetched.
      */
-    async fetchRosterContacts () {
+    async fetchRosterContacts() {
         const result = await new Promise((resolve, reject) => {
             this.fetch({
                 'add': true,
                 'silent': true,
                 'success': resolve,
-                'error': (c, e) => reject(e)
+                'error': (c, e) => reject(e),
             });
         });
         if (u.isErrorObject(result)) {
             log.error(result);
             // Force a full roster refresh
-            _converse.session.save('roster_cached', false)
+            _converse.session.save('roster_cached', false);
             this.data.save('version', undefined);
         }
 
@@ -93,7 +98,7 @@ const RosterContacts = Collection.extend({
         }
     },
 
-    subscribeToSuggestedItems (msg) {
+    subscribeToSuggestedItems(msg) {
         Array.from(msg.querySelectorAll('item')).forEach(item => {
             if (item.getAttribute('action') === 'add') {
                 _converse.roster.addAndSubscribe(
@@ -105,7 +110,7 @@ const RosterContacts = Collection.extend({
         return true;
     },
 
-    isSelf (jid) {
+    isSelf(jid) {
         return u.isSameBareJID(jid, _converse.connection.jid);
     },
 
@@ -120,7 +125,7 @@ const RosterContacts = Collection.extend({
      * @param { String } message - An optional message to explain the reason for the subscription request.
      * @param { Object } attributes - Any additional attributes to be stored on the user's model.
      */
-    async addAndSubscribe (jid, name, groups, message, attributes) {
+    async addAndSubscribe(jid, name, groups, message, attributes) {
         const contact = await this.addContactToRoster(jid, name, groups, attributes);
         if (contact instanceof _converse.RosterContact) {
             contact.subscribe(message);
@@ -137,11 +142,9 @@ const RosterContacts = Collection.extend({
      * @param { Function } callback - A function to call once the IQ is returned
      * @param { Function } errback - A function to call if an error occurred
      */
-    sendContactAddIQ (jid, name, groups) {
+    sendContactAddIQ(jid, name, groups) {
         name = name ? name : null;
-        const iq = $iq({'type': 'set'})
-            .c('query', {'xmlns': Strophe.NS.ROSTER})
-            .c('item', { jid, name });
+        const iq = $iq({ 'type': 'set' }).c('query', { 'xmlns': Strophe.NS.ROSTER }).c('item', { jid, name });
         groups.forEach(g => iq.c('group').t(g).up());
         return api.sendIQ(iq);
     },
@@ -157,7 +160,7 @@ const RosterContacts = Collection.extend({
      * @param { Array.String } groups - Any roster groups the user might belong to
      * @param { Object } attributes - Any additional attributes to be stored on the user's model.
      */
-    async addContactToRoster (jid, name, groups, attributes) {
+    async addContactToRoster(jid, name, groups, attributes) {
         await api.waitUntil('rosterContactsFetched');
         groups = groups || [];
         try {
@@ -167,31 +170,37 @@ const RosterContacts = Collection.extend({
             alert(__('Sorry, there was an error while trying to add %1$s as a contact.', name || jid));
             return e;
         }
-        return this.create(Object.assign({
-            'ask': undefined,
-            'nickname': name,
-            groups,
-            jid,
-            'requesting': false,
-            'subscription': 'none'
-        }, attributes), {'sort': false});
+        return this.create(
+            Object.assign(
+                {
+                    'ask': undefined,
+                    'nickname': name,
+                    groups,
+                    jid,
+                    'requesting': false,
+                    'subscription': 'none',
+                },
+                attributes
+            ),
+            { 'sort': false }
+        );
     },
 
-    async subscribeBack (bare_jid, presence) {
+    async subscribeBack(bare_jid, presence) {
         const contact = this.get(bare_jid);
         if (contact instanceof _converse.RosterContact) {
             contact.authorize().subscribe();
         } else {
             // Can happen when a subscription is retried or roster was deleted
             const nickname = sizzle(`nick[xmlns="${Strophe.NS.NICK}"]`, presence).pop()?.textContent || null;
-            const contact = await this.addContactToRoster(bare_jid, nickname, [], {'subscription': 'from'});
+            const contact = await this.addContactToRoster(bare_jid, nickname, [], { 'subscription': 'from' });
             if (contact instanceof _converse.RosterContact) {
                 contact.authorize().subscribe();
             }
         }
     },
 
-    getNumOnlineContacts () {
+    getNumOnlineContacts() {
         const ignored = ['offline', 'unavailable'];
         return sum(this.models.filter(m => !ignored.includes(m.presence.get('show'))));
     },
@@ -203,22 +212,20 @@ const RosterContacts = Collection.extend({
      * @method _converse.RosterContacts#onRosterPush
      * @param { XMLElement } IQ - The IQ stanza received from the XMPP server.
      */
-    onRosterPush (iq) {
+    onRosterPush(iq) {
         const id = iq.getAttribute('id');
         const from = iq.getAttribute('from');
-        if (from && from !== _converse.bare_jid) {
+        if (from && Strophe.getBareJidFromJid(from) !== _converse.bare_jid) {
             // https://tools.ietf.org/html/rfc6121#page-15
             //
             // A receiving client MUST ignore the stanza unless it has no 'from'
             // attribute (i.e., implicitly from the bare JID of the user's
             // account) or it has a 'from' attribute whose value matches the
             // user's bare JID <user@domainpart>.
-            log.warn(
-                `Ignoring roster illegitimate roster push message from ${iq.getAttribute('from')}`
-            );
+            log.warn(`Ignoring roster illegitimate roster push message from ${iq.getAttribute('from')}`);
             return;
         }
-        api.send($iq({type: 'result', id, from: _converse.connection.jid}));
+        api.send($iq({ type: 'result', id, from: _converse.connection.jid }));
 
         const query = sizzle(`query[xmlns="${Strophe.NS.ROSTER}"]`, iq).pop();
         this.data.save('version', query.getAttribute('ver'));
@@ -244,7 +251,7 @@ const RosterContacts = Collection.extend({
         return;
     },
 
-    rosterVersioningSupported () {
+    rosterVersioningSupported() {
         return api.disco.stream.getFeature('ver', 'urn:xmpp:features:rosterver') && this.data.get('version');
     },
 
@@ -254,13 +261,13 @@ const RosterContacts = Collection.extend({
      * @emits _converse#roster
      * @returns {promise}
      */
-    async fetchFromServer () {
+    async fetchFromServer() {
         const stanza = $iq({
             'type': 'get',
-            'id': u.getUniqueId('roster')
-        }).c('query', {xmlns: Strophe.NS.ROSTER});
+            'id': u.getUniqueId('roster'),
+        }).c('query', { xmlns: Strophe.NS.ROSTER });
         if (this.rosterVersioningSupported()) {
-            stanza.attrs({'ver': this.data.get('version')});
+            stanza.attrs({ 'ver': this.data.get('version') });
         }
         const iq = await api.sendIQ(stanza, null, false);
         if (iq.getAttribute('type') !== 'error') {
@@ -273,7 +280,7 @@ const RosterContacts = Collection.extend({
         } else if (!u.isServiceUnavailableError(iq)) {
             // Some unknown error happened, so we will try to fetch again if the page reloads.
             log.error(iq);
-            log.error("Error while trying to fetch roster from the server");
+            log.error('Error while trying to fetch roster from the server');
             return;
         }
         _converse.session.save('roster_cached', true);
@@ -294,25 +301,28 @@ const RosterContacts = Collection.extend({
      * @private
      * @param { XMLElement } item
      */
-    updateContact (item) {
+    updateContact(item) {
         const jid = item.getAttribute('jid');
         const contact = this.get(jid);
-        const subscription = item.getAttribute("subscription");
-        const ask = item.getAttribute("ask");
+        const subscription = item.getAttribute('subscription');
+        const ask = item.getAttribute('ask');
         const groups = [...new Set(sizzle('group', item).map(e => e.textContent))];
         if (!contact) {
-            if ((subscription === "none" && ask === null) || (subscription === "remove")) {
+            if ((subscription === 'none' && ask === null) || subscription === 'remove') {
                 return; // We're lazy when adding contacts.
             }
-            this.create({
-                'ask': ask,
-                'nickname': item.getAttribute("name"),
-                'groups': groups,
-                'jid': jid,
-                'subscription': subscription
-            }, {sort: false});
+            this.create(
+                {
+                    'ask': ask,
+                    'nickname': item.getAttribute('name'),
+                    'groups': groups,
+                    'jid': jid,
+                    'subscription': subscription,
+                },
+                { sort: false }
+            );
         } else {
-            if (subscription === "remove") {
+            if (subscription === 'remove') {
                 return contact.destroy();
             }
             // We only find out about requesting contacts via the
@@ -322,14 +332,14 @@ const RosterContacts = Collection.extend({
             contact.save({
                 'subscription': subscription,
                 'ask': ask,
-                'nickname': item.getAttribute("name"),
+                'nickname': item.getAttribute('name'),
                 'requesting': null,
-                'groups': groups
+                'groups': groups,
             });
         }
     },
 
-    createRequestingContact (presence) {
+    createRequestingContact(presence) {
         const bare_jid = Strophe.getBareJidFromJid(presence.getAttribute('from'));
         const nickname = sizzle(`nick[xmlns="${Strophe.NS.NICK}"]`, presence).pop()?.textContent || null;
         const user_data = {
@@ -337,7 +347,7 @@ const RosterContacts = Collection.extend({
             'subscription': 'none',
             'ask': null,
             'requesting': true,
-            'nickname': nickname
+            'nickname': nickname,
         };
         /**
          * Triggered when someone has requested to subscribe to your presence (i.e. to be your contact).
@@ -348,29 +358,25 @@ const RosterContacts = Collection.extend({
         api.trigger('contactRequest', this.create(user_data));
     },
 
-
-    handleIncomingSubscription (presence) {
+    handleIncomingSubscription(presence) {
         const jid = presence.getAttribute('from'),
             bare_jid = Strophe.getBareJidFromJid(jid),
             contact = this.get(bare_jid);
 
         if (!api.settings.get('allow_contact_requests')) {
-            rejectPresenceSubscription(
-                jid,
-                __("This client does not allow presence subscriptions")
-            );
+            rejectPresenceSubscription(jid, __('This client does not allow presence subscriptions'));
         }
         if (api.settings.get('auto_subscribe')) {
-            if ((!contact) || (contact.get('subscription') !== 'to')) {
+            if (!contact || contact.get('subscription') !== 'to') {
                 this.subscribeBack(bare_jid, presence);
             } else {
                 contact.authorize();
             }
         } else {
             if (contact) {
-                if (contact.get('subscription') !== 'none')  {
+                if (contact.get('subscription') !== 'none') {
                     contact.authorize();
-                } else if (contact.get('ask') === "subscribe") {
+                } else if (contact.get('ask') === 'subscribe') {
                     contact.authorize();
                 }
             } else {
@@ -379,24 +385,26 @@ const RosterContacts = Collection.extend({
         }
     },
 
-    handleOwnPresence (presence) {
+    handleOwnPresence(presence) {
         const jid = presence.getAttribute('from'),
-              resource = Strophe.getResourceFromJid(jid),
-              presence_type = presence.getAttribute('type');
+            resource = Strophe.getResourceFromJid(jid),
+            presence_type = presence.getAttribute('type');
 
-        if ((_converse.connection.jid !== jid) &&
-                (presence_type !== 'unavailable') &&
-                (api.settings.get('synchronize_availability') === true ||
-                 api.settings.get('synchronize_availability') === resource)) {
+        if (
+            _converse.connection.jid !== jid &&
+            presence_type !== 'unavailable' &&
+            (api.settings.get('synchronize_availability') === true ||
+                api.settings.get('synchronize_availability') === resource)
+        ) {
             // Another resource has changed its status and
             // synchronize_availability option set to update,
             // we'll update ours as well.
             const show = presence.querySelector('show')?.textContent || 'online';
-            _converse.xmppstatus.save({'status': show}, {'silent': true});
+            _converse.xmppstatus.save({ 'status': show }, { 'silent': true });
 
             const status_message = presence.querySelector('status')?.textContent;
             if (status_message) {
-                _converse.xmppstatus.save({'status_message': status_message});
+                _converse.xmppstatus.save({ 'status_message': status_message });
             }
         }
         if (_converse.jid === jid && presence_type === 'unavailable') {
@@ -418,12 +426,14 @@ const RosterContacts = Collection.extend({
         }
     },
 
-    presenceHandler (presence) {
+    presenceHandler(presence) {
         const presence_type = presence.getAttribute('type');
-        if (presence_type === 'error') { return true; }
+        if (presence_type === 'error') {
+            return true;
+        }
 
         const jid = presence.getAttribute('from'),
-              bare_jid = Strophe.getBareJidFromJid(jid);
+            bare_jid = Strophe.getBareJidFromJid(jid);
         if (this.isSelf(bare_jid)) {
             return this.handleOwnPresence(presence);
         } else if (sizzle(`query[xmlns="${Strophe.NS.MUC}"]`, presence).length) {
@@ -433,8 +443,8 @@ const RosterContacts = Collection.extend({
         const status_message = presence.querySelector('status')?.textContent;
         const contact = this.get(bare_jid);
 
-        if (contact && (status_message !== contact.get('status'))) {
-            contact.save({'status': status_message});
+        if (contact && status_message !== contact.get('status')) {
+            contact.save({ 'status': status_message });
         }
 
         if (presence_type === 'subscribed' && contact) {
@@ -452,7 +462,7 @@ const RosterContacts = Collection.extend({
             // presence_type is undefined
             contact.presence.addResource(presence);
         }
-    }
+    },
 });
 
 export default RosterContacts;
