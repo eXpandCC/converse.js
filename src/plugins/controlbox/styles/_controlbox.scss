@@ -1,8 +1,8 @@
-@import "bootstrap/scss/functions";
-@import "bootstrap/scss/variables";
-@import "bootstrap/scss/mixins";
-@import "shared/styles/_variables.scss";
-@import "shared/styles/_mixins.scss";
+@import 'bootstrap/scss/functions';
+@import 'bootstrap/scss/variables';
+@import 'bootstrap/scss/mixins';
+@import 'shared/styles/_variables.scss';
+@import 'shared/styles/_mixins.scss';
 
 .conversejs {
     .oauth-providers {
@@ -94,7 +94,8 @@
             font-size: 100%;
         }
 
-        .open-rooms-toggle, .open-rooms-toggle .fa {
+        .open-rooms-toggle,
+        .open-rooms-toggle .fa {
             color: var(--groupchats-header-color) !important;
             &:hover {
                 color: var(--chatroom-head-bg-color-dark) !important;
@@ -167,7 +168,8 @@
                     text-overflow: ellipsis;
                     max-width: 110px;
                 }
-                span, input[name=username] {
+                span,
+                input[name='username'] {
                     display: table-cell;
                     text-align: left;
                 }
@@ -194,7 +196,8 @@
             }
         }
 
-        #converse-login-panel, #converse-register-panel {
+        #converse-login-panel,
+        #converse-register-panel {
             padding-top: 0;
             padding-bottom: 0;
         }
@@ -225,9 +228,9 @@
             padding: 0;
 
             .add-chatroom {
-                input[type=button],
-                input[type=submit],
-                input[type=text] {
+                input[type='button'],
+                input[type='submit'],
+                input[type='text'] {
                     width: 100%;
                 }
                 margin: 0;
@@ -236,7 +239,6 @@
         }
 
         .controlbox-section {
-
             .controlbox-heading {
                 font-family: var(--heading-font);
                 color: var(--controlbox-heading-color);
@@ -348,7 +350,7 @@
                 .change-status {
                     min-width: 25px;
                     text-align: center;
-                    padding-left:20px ;
+                    padding-left: 20px;
                 }
             }
 
@@ -368,7 +370,7 @@
                 margin-left: 0;
                 margin-bottom: 0;
                 &.odd {
-                    background-color: #DCEAC5;
+                    background-color: #dceac5;
                 }
             }
         }
@@ -389,7 +391,6 @@
 .conversejs {
     converse-chats {
         &.converse-overlayed {
-
             display: flex;
             flex-direction: row-reverse;
 
@@ -449,7 +450,8 @@
                     }
                 }
 
-                #converse-register, #converse-login {
+                #converse-register,
+                #converse-login {
                     @include make-col(12);
                     padding-bottom: 0;
                 }
@@ -462,12 +464,13 @@
 
                 .controlbox-panes {
                     border-radius: var(--chatbox-border-radius);
+                    border: unset;
                 }
             }
         }
 
         &.converse-embedded,
-        &.converse-fullscreen{
+        &.converse-fullscreen {
             .toggle-controlbox {
                 display: none;
             }
@@ -551,7 +554,8 @@
                     }
                 }
 
-                #converse-register, #converse-login {
+                #converse-register,
+                #converse-login {
                     @include make-col-ready();
                     @include make-col(8);
                     @include make-col-offset(2);
@@ -568,11 +572,12 @@
                         @include make-col(6);
                         @include make-col-offset(3);
                     }
-                    .title, .instructions {
+                    .title,
+                    .instructions {
                         margin: 1em 0;
                     }
-                    input[type=submit],
-                    input[type=button] {
+                    input[type='submit'],
+                    input[type='button'] {
                         width: auto;
                     }
                 }
@@ -610,7 +615,6 @@
 }
 
 @include media-breakpoint-down(sm) {
-
     .conversejs {
         left: 0;
         right: 0;

@@ -3,7 +3,7 @@ import { _converse, api } from "../../core.js";
 import { initStorage } from '@converse/headless/utils/storage.js';
 
 const ChatBoxes = Collection.extend({
-    comparator: 'false',
+    comparator: 'time_opened',
 
     model (attrs, options) {
         return new _converse.ChatBox(attrs, options);
