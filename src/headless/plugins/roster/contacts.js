@@ -307,6 +307,9 @@ const RosterContacts = Collection.extend({
         const subscription = item.getAttribute('subscription');
         const ask = item.getAttribute('ask');
         const groups = [...new Set(sizzle('group', item).map(e => e.textContent))];
+        if (this.isSelf(jid)) {
+            return;
+        }
         if (!contact) {
             if ((subscription === 'none' && ask === null) || subscription === 'remove') {
                 return; // We're lazy when adding contacts.
