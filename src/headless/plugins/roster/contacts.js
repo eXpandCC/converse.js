@@ -76,7 +76,9 @@ const RosterContacts = Collection.extend({
                 'error': (c, e) => reject(e),
             });
         });
-        if (u.isErrorObject(result)) {
+        // result.filter(i => !i.get('id')).length
+        // regenerate roster if invalid contact objects.
+        if (u.isErrorObject(result) || result.filter(i => !i.get('id')).length) {
             log.error(result);
             // Force a full roster refresh
             _converse.session.save('roster_cached', false);
