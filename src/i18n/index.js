@@ -7,8 +7,6 @@
 import Jed from 'jed';
 import log from "@converse/headless/log";
 import { _converse, api, converse, i18n } from '@converse/headless/core';
-import * as i18n_ES from './es/LC_MESSAGES/converse.po';
-import * as i18n_ES_day from '../../dist/locales/dayjs/es-js';
 
 const { dayjs } = converse.env;
 
@@ -81,9 +79,10 @@ async function fetchTranslations (_converse) {
     if (!isConverseLocale(locale, api.settings.get("locales")) || locale === 'en') {
         return;
     }
-    i18n_ES_day;
+    const { default: data } = await import(/*webpackChunkName: "locales/[request]" */ `../i18n/${locale}/LC_MESSAGES/converse.po`);
+    await import(/*webpackChunkName: "locales/dayjs/[request]" */ `dayjs/locale/${dayjs_locale}.js`);
     dayjs.locale(getLocale(dayjs_locale, l => dayjs.locale(l)));
-    jed_instance = new Jed(i18n_ES);
+    jed_instance = new Jed(data);
 }
 
 
