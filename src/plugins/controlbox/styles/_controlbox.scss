@@ -291,7 +291,7 @@
                     left: 0;
                     top: 0;
                     width: 100%;
-                    z-index: 21;
+                    z-index: 1;
                     background-color: var(--light-background-color);
                     li:hover {
                         background-color: var(--highlight-color);
@@ -303,7 +303,7 @@
                 height: 0;
                 .contact-form-container {
                     position: absolute;
-                    z-index: 22;
+                    z-index: 1;
                     form {
                         box-shadow: 1px 4px 10px 1px rgba(0, 0, 0, 0.4);
                         background-color: white;
