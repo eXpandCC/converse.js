@@ -9,6 +9,12 @@
         .modal {
             background-color: rgba(0, 0, 0, 0.32);
 
+            .modal-dialog{
+                display: flex;
+                align-items: center;
+                height: 100%;
+            }
+
             .modal-header{
                 border-bottom:transparent !important;
                 padding: 24px 24px 8px 24px;
