@@ -445,7 +445,7 @@ const RosterContacts = Collection.extend({
             return; // Ignore MUC
         }
 
-        const status_message = presence.querySelector('status')?.textContent;
+        const status_message = presence.querySelector('show')?.textContent;
         const contact = this.get(bare_jid);
 
         if (contact && status_message !== contact.get('status')) {
