@@ -76,7 +76,9 @@ const RosterContacts = Collection.extend({
                 'error': (c, e) => reject(e),
             });
         });
-        if (u.isErrorObject(result)) {
+        // result.filter(i => !i.get('id')).length
+        // regenerate roster if invalid contact objects.
+        if (u.isErrorObject(result) || result.filter(i => !i.get('id')).length) {
             log.error(result);
             // Force a full roster refresh
             _converse.session.save('roster_cached', false);
@@ -307,6 +309,9 @@ const RosterContacts = Collection.extend({
         const subscription = item.getAttribute('subscription');
         const ask = item.getAttribute('ask');
         const groups = [...new Set(sizzle('group', item).map(e => e.textContent))];
+        if (this.isSelf(jid)) {
+            return;
+        }
         if (!contact) {
             if ((subscription === 'none' && ask === null) || subscription === 'remove') {
                 return; // We're lazy when adding contacts.
@@ -440,7 +445,7 @@ const RosterContacts = Collection.extend({
             return; // Ignore MUC
         }
 
-        const status_message = presence.querySelector('status')?.textContent;
+        const status_message = presence.querySelector('show')?.textContent;
         const contact = this.get(bare_jid);
 
         if (contact && status_message !== contact.get('status')) {

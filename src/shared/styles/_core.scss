@@ -8,7 +8,7 @@
     font-family: var(--normal-font);
     font-size: var(--font-size);
     direction: ltr;
-    z-index: 1031; // One more than bootstrap navbar
+    z-index: 1; // One more than bootstrap navbar
 
     textarea:disabled {
         background-color: #EEE !important;

@@ -2333,3 +2333,15 @@ msgstr ""
 #: dist/converse-no-dependencies.js:95996
 msgid "Extended Away"
 msgstr ""
+
+msgid "Connecting"
+msgstr ""
+
+msgid "Skin tone"
+msgstr ""
+
+msgid "Bomb"
+msgstr ""
+
+msgid "Internal chat"
+msgstr ""
