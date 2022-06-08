@@ -20,7 +20,7 @@ export default (o) => html`
                                 <span class="fa fa-circle chat-status chat-status--online"></span>${o.label_online}</label>
                         </div>
                         <div class="custom-control custom-radio">
-                            <input ?checked=${o.status === 'busy'}
+                            <input ?checked=${o.status === 'dnd'}
                                 type="radio" id="radio-busy" value="dnd" name="chat_status" class="custom-control-input"/>
                             <label class="custom-control-label" for="radio-busy">
                                 <span class="fa fa-minus-circle  chat-status chat-status--busy"></span>${o.label_busy}</label>
