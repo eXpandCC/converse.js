@@ -32,6 +32,9 @@ export default class ChatHeading extends CustomElement {
             'heading_buttons_promise': this.getHeadingButtons(),
             'model': this.model,
             'showUserDetailsModal': ev => this.showUserDetailsModal(ev),
+            'label_xa': __('Away for long'),
+            'label_away': __('Away'),
+            'label_dnd': __('Busy'),
         }));
     }
 

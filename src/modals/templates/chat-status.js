@@ -38,13 +38,6 @@ export default (o) => html`
                                 <span class="far fa-circle chat-status chat-status--xa"></span>${o.label_xa}</label>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="btn-group w-100">
-                            <input name="status_message" type="text" class="form-control"
-                                value="${o.status_message || ''}" placeholder="${o.placeholder_status_message}"/>
-                            <span class="clear-input fa fa-times ${o.status_message ? '' : 'hidden'}"></span>
-                        </div>
-                    </div>
                     <div class="btn-footer">
                         <button type="submit" class="btn btn-light">${o.label_save}</button>
                     </div>                    

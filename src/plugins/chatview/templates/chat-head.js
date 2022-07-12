@@ -41,6 +41,8 @@ export default (o) => {
 
     const show_avatar = api.settings.get('show_avatar');
 
+    const statusLabel = o.status ? o['label_' + o.status] : '';
+
     return html`
         <div class="chatbox-title ${ o.status ? '' :  "chatbox-title--no-desc"}">
             <div class="chatbox-title--row">
@@ -55,6 +57,6 @@ export default (o) => {
                 ${ until(tpl_standalone_btns(), '') }
             </div>
         </div>
-        ${ o.status ? html`<p class="chat-head__desc">${ o.status }</p>` : '' }
+        ${ statusLabel ? html`<p class="chat-head__desc">${ statusLabel }</p>` : '' }
     `;
 }
