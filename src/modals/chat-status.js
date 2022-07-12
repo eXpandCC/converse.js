@@ -10,7 +10,6 @@ const ChatStatusModal = BootstrapModal.extend({
     id: "modal-status-change",
     events: {
         "submit form#set-xmpp-status": "onFormSubmitted",
-        "click .clear-input": "clearStatusMessage"
     },
 
     toHTML () {
@@ -32,20 +31,7 @@ const ChatStatusModal = BootstrapModal.extend({
             }));
     },
 
-    afterRender () {
-        this.el.addEventListener('shown.bs.modal', () => {
-            this.el.querySelector('input[name="status_message"]').focus();
-        }, false);
-    },
-
-    clearStatusMessage (ev) {
-        if (ev && ev.preventDefault) {
-            ev.preventDefault();
-            u.hideElement(this.el.querySelector('.clear-input'));
-        }
-        const roster_filter = this.el.querySelector('input[name="status_message"]');
-        roster_filter.value = '';
-    },
+    afterRender () { },
 
     onFormSubmitted (ev) {
         ev.preventDefault();
